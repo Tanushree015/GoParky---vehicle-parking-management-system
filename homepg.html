@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoParky - Smart Parking System</title>
+  <style>
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+   body {
+  margin: 0;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #2a2a2a;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('v3.jpg'); /* Your background image */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2000px;
+  filter: blur(10px); /* Adjust blur level */
+  opacity: 0.9;       /* Adjust visibility */
+  z-index: -1;        /* Push behind content */
+}
+
+
+
+    .container {
+      padding: 60px;
+      max-width: 5000px;
+    }
+
+    /* Animation helper class */
+    .fade-in-up {
+      opacity: 0;
+      animation-fill-mode: forwards;
+      animation-name: fadeInUp;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+    }
+
+    h1 {
+      font-size: 4em;
+      margin: 0;
+      color: #ffffff;
+      text-align: left;
+      animation-delay: 0.3s;
+    }
+
+    p.description {
+      font-size: 1em;
+      color: #bbbbbb;
+      margin-top: 10px;
+      line-height: 1.6;
+      max-width: auto;
+      text-align: left;
+      animation-delay: 0.8s;
+    }
+
+    .features {
+      font-size: 0.95em;
+      color: #dddddd;
+      margin-top: 30px;
+      padding-left: 20px;
+      max-width: 600px;
+      text-align: left;
+      animation-delay: 1.3s;
+    }
+
+    .features li {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+  display: block;
+  margin: 20px auto 0; /* Top margin 20px, auto left/right centers it */
+  padding: 12px 24px;
+  background-color: #D4AF37;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation-delay: 1.8s;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #0097a7;
+}
+
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      font-size: 0.85em;
+      color:black;
+      animation-delay: 2.3s;
+      background-color:#D4AF37;
+      width: 100%;
+      padding:10px 0;
+      z-index: 10;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <h1 class="fade-in-up" style="color: #D4AF37;">GoParky</h1>
+    <p class="description fade-in-up">
+      GoParky is a smart vehicle parking management system designed to streamline and simplify the parking process for institutions, businesses, and gated communities. It ensures efficient parking slot allocation, real-time vehicle tracking, and user-friendly access for both admins and staff.
+    </p>
+    <ul class="features fade-in-up">
+      <li>Separate dashboards for Admin and Staff users</li>
+      <li>Live tracking and monitoring of parking slots</li>
+      <li>Secure and efficient parking space allocation</li>
+      <li>Scalable for small to large parking areas</li>
+      <li>Professional and intuitive interface design</li>
+    </ul>
+    <button class="btn fade-in-up" onclick="window.location.href='login.html'">Get Started</button>
+  </div>
+
+  <footer class="fade-in-up">
+    Mini Project | MCA Semester 2| KLE Technological University|<a href="terms.html" style="color: black;">Terms&Conditions</a>
+  </footer>
+</body>
+</html>

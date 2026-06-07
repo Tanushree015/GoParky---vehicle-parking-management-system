@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Vehicle Report</title>
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --black: #000;
+      --white: #fff;
+      --bg-dark: #121212;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    body.light {
+      background-color: var(--white);
+      color: var(--black);
+    }
+    .taskbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--black);
+      padding: 1rem 2rem;
+      color: var(--gold);
+      box-shadow: var(--shadow);
+    }
+    body.light .taskbar {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .logo img {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+    }
+    .title {
+      margin-left: auto;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .theme-btn {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 1.5rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .theme-btn:hover {
+      background: #c29b2e;
+      transform: scale(1.05);
+    }
+    .container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+    .sidebar {
+      width: 240px;
+      background: var(--gold);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.1);
+    }
+    .sidebar h3 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--black);
+      padding: 0.8rem 1rem;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .sidebar a:hover {
+      background: var(--black);
+      color: var(--gold);
+      transform: translateX(6px);
+    }
+    .main {
+      flex: 1;
+      padding: 2rem;
+      background: #0d0d0d;
+      color: #ffd700;
+      min-height: 100vh;
+    }
+    body.light .main {
+      background: var(--white);
+      color: var(--black);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-box {
+      margin-bottom: 20px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body.light .form-box {
+      background: #f9f9f9;
+    }
+    input, select, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+      font-size: 1rem;
+    }
+    input, select {
+      background: #222;
+      color: #ffd700;
+      border: 1px solid #444;
+    }
+    body.light input, body.light select {
+      background: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #b8860b;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #D4AF37;
+    }
+    table {
+      width: 100%;
+      background: #1a1a1a;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    body.light table {
+      background: #f0f0f0;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #444;
+      color: #fffacd;
+    }
+    body.light th, body.light td {
+      color: #333;
+    }
+    th {
+      background: #ffcc00;
+      color: black;
+    }
+    a.vehicle-id {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+    .total-row td {
+      background: #222;
+      font-weight: bold;
+      color: #ffd700;
+    }
+    body.light .total-row td {
+      background: #ddd;
+      color: #000;
+    }
+    .no-data {
+      text-align: center;
+      color: #ff6666;
+      font-weight: bold;
+      padding: 2rem 0;
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding: 1rem;
+      }
+      .main {
+        padding: 1rem;
+      }
+      table, th, td {
+        font-size: 0.95rem;
+      }
+    }
+    .slot-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
+      color: #222;
+      font-weight: bold;
+      border-radius: 16px;
+      padding: 0.25em 1em;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      font-size: 1em;
+      letter-spacing: 1px;
+      border: 1px solid #ffe066;
+      transition: background 0.3s, color 0.3s;
+    }
+    .slot-badge:hover {
+      background: linear-gradient(90deg, #fffbe6 60%, #ffd700 100%);
+      color: #b8860b;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.15);
+    }
+    .fade-in-row {
+      opacity: 0;
+    }
+    table tr.fade-in-row {
+      transition: background 0.3s, opacity 0.5s;
+    }
+    table tr.fade-in-row:hover {
+      background: #222 !important;
+      color: #ffd700 !important;
+      transform: scale(1.01);
+      box-shadow: 0 2px 8px rgba(212,175,55,0.08);
+      z-index: 2;
+      position: relative;
+    }
+  </style>
+</head>
+<body class="light" onload="generateReport()">
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" />
+    </div>
+    <div class="title">Admin Dashboard</div>
+    <button class="theme-btn" onclick="toggleTheme()">Switch Theme</button>
+  </div>
+
+  <!-- Sidebar + Main Content -->
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Admin Menu</h3>
+      <a href="admin.html">📌 Dashboard</a>
+      <a href="staffmag.html">👥 Manage Staff</a>
+      <a href="mslot.html">🅿️ Manage Parking Slots</a>
+      <a href="report2.html">📊 View Reports</a>
+      <a href="2d.html">🧩 2D View</a>
+      <a href="profile.html">👤 My Profile</a>
+      <a href="login.html">🚪 Logout</a>
+    </aside>
+
+    <main class="main">
+      <h1>Vehicle Parking Report</h1>
+
+      <div class="form-box">
+        <label for="count">Enter:</label>
+        <input type="number" id="count" value="7" min="1" />
+        <select id="type">
+          <option value="days" selected>Days</option>
+          <option value="months">Months</option>
+          <option value="years">Years</option>
+        </select>
+        <button onclick="generateReport()">Generate Report</button>
+      </div>
+
+      <table id="reportTable" style="display: none;">
+        <thead>
+          <tr>
+            <th>Serial No.</th>
+            <th>Log ID</th>
+            <th>Vehicle ID</th>
+            <th>Vehicle Type</th>
+            <th>Slot Number</th>
+            <th>Paid Amount</th>
+            <th>Entry Time</th>
+            <th>Exit Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="6" style="text-align:right;">Total Paid</td>
+            <td id="totalAmount" colspan="3" style="text-align:left;">₹0</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="noData" class="no-data" style="display:none;">No data found for the selected period.</div>
+    </main>
+  </div>
+
+  <script>
+function toggleTheme() {
+  document.body.classList.toggle('light');
+}
+function formatDateTime(dt) {
+  if (!dt) return '-';
+  // dt is expected as "YYYY-MM-DD HH:MM:SS"
+  const d = new Date(dt.replace(' ', 'T'));
+  if (isNaN(d.getTime())) return dt; // fallback if parsing fails
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const day = days[d.getDay()];
+  const date = d.getDate().toString().padStart(2, '0');
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const year = d.getFullYear();
+  const hour = d.getHours().toString().padStart(2, '0');
+  const min = d.getMinutes().toString().padStart(2, '0');
+  return `${day}, ${year}-${month}-${date} ${hour}:${min}`;
+}
+async function generateReport() {
+  const table = document.getElementById("reportTable");
+  const tbody = table.querySelector("tbody");
+  const totalEl = document.getElementById("totalAmount");
+  const noDataDiv = document.getElementById("noData");
+
+  const count = document.getElementById("count").value;
+  const type = document.getElementById("type").value;
+
+  tbody.innerHTML = '';
+  table.style.display = 'none';
+  noDataDiv.style.display = 'none';
+
+  let total = 0;
+
+  try {
+    const params = new URLSearchParams({ count, type });
+    const res = await fetch(`/api/parklog?${params.toString()}`);
+    const result = await res.json();
+
+    if (!result.success || !result.data.length) {
+      noDataDiv.style.display = 'block';
+      totalEl.textContent = '₹0';
+      return;
+    }
+
+    result.data.forEach((d, i) => {
+      tbody.innerHTML += `
+        <tr class="fade-in-row">
+          <td>${i + 1}</td>
+          <td>${d.log_id}</td>
+          <td>${d.vehicle_id}</td>
+          <td>${d.vehicle_type ? d.vehicle_type.toUpperCase() : 'UNKNOWN'}</td>
+          <td><span class="slot-badge">${d.slot_id}</span></td>
+          <td>₹${d.payment || 0}</td>
+          <td>${d.entry_time ? formatDateTime(d.entry_time) : ''}</td>
+          <td>${d.exit_time ? formatDateTime(d.exit_time) : '-'}</td>
+        </tr>
+      `;
+      total += Number(d.payment) || 0;
+    });
+
+    totalEl.textContent = `₹${total}`;
+    table.style.display = 'table';
+
+    document.querySelectorAll('.fade-in-row').forEach((row, idx) => {
+      row.style.opacity = 0;
+      setTimeout(() => {
+        row.style.transition = 'opacity 0.5s';
+        row.style.opacity = 1;
+      }, 100 * idx);
+    });
+  } catch (err) {
+    noDataDiv.textContent = "Error loading report.";
+    noDataDiv.style.display = 'block';
+    totalEl.textContent = '₹0';
+  }
+}
+  </script>
+</body>
+</html>

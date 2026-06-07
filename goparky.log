@@ -1,0 +1,92 @@
+2025-12-09 19:50:45,566 [ERROR] app - Error during login
+Traceback (most recent call last):
+  File "C:\Users\Tanushree\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection_cext.py", line 354, in _open_connection
+    self._cmysql.connect(**cnx_kwargs)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+_mysql_connector.MySQLInterfaceError: Access denied for user 'root'@'localhost' (using password: YES)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\project\app.py", line 585, in login_post
+    conn = get_conn()
+  File "F:\project\app.py", line 61, in get_conn
+    conn = mysql.connector.connect(**DB_CONFIG)
+  File "C:\Users\Tanushree\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\pooling.py", line 322, in connect
+    return CMySQLConnection(*args, **kwargs)
+  File "C:\Users\Tanushree\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection_cext.py", line 142, in __init__
+    self.connect(**kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Tanushree\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\abstracts.py", line 1604, in connect
+    self._open_connection()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Tanushree\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection_cext.py", line 360, in _open_connection
+    raise get_mysql_exception(
+        err.errno, msg=err.msg, sqlstate=err.sqlstate
+    ) from err
+mysql.connector.errors.ProgrammingError: 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+2025-12-09 19:52:32,014 [DEBUG] app - DB Connection: True
+2025-12-09 19:54:38,277 [DEBUG] app - DB Connection: True
+2025-12-09 19:54:54,952 [DEBUG] app - DB Connection: True
+2025-12-10 13:28:40,111 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:19,688 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:19,850 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:38,064 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:41,490 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:41,511 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:44,816 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:44,820 [DEBUG] app - Fetched 88 slots
+2026-06-07 01:27:49,994 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:54,948 [DEBUG] app - DB Connection: True
+2026-06-07 01:27:57,506 [DEBUG] app - DB Connection: True
+2026-06-07 01:28:02,511 [DEBUG] app - DB Connection: True
+2026-06-07 01:28:04,904 [DEBUG] app - DB Connection: True
+2026-06-07 05:37:36,678 [DEBUG] app - DB Connection: True
+2026-06-07 05:37:36,742 [DEBUG] app - DB Connection: True
+2026-06-07 05:37:36,778 [ERROR] app - Error fetching admin stats
+Traceback (most recent call last):
+  File "E:\project\app.py", line 739, in admin_stats
+    cur.execute("""
+    ~~~~~~~~~~~^^^^
+        SELECT u.id, u.name, DATE_FORMAT(l.login_time, '%Y-%m-%d %H:%i:%s') AS login_time
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ORDER BY l.login_time ASC
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    """, (today,))
+    ^^^^^^^^^^^^^^
+  File "C:\Users\HP\AppData\Roaming\uv\python\cpython-3.14.5-windows-x86_64-none\Lib\site-packages\mysql\connector\cursor_cext.py", line 333, in execute
+    stmt = RE_PY_PARAM.sub(psub, stmt)
+  File "C:\Users\HP\AppData\Roaming\uv\python\cpython-3.14.5-windows-x86_64-none\Lib\site-packages\mysql\connector\cursor_cext.py", line 113, in __call__
+    raise ProgrammingError(
+        "Not enough parameters for the SQL statement"
+    ) from None
+mysql.connector.errors.ProgrammingError: Not enough parameters for the SQL statement
+2026-06-07 05:38:10,958 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:10,960 [DEBUG] app - Fetched 88 slots
+2026-06-07 05:38:13,400 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:18,409 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:23,415 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:28,406 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:33,406 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:37,578 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:37,580 [DEBUG] app - Fetched 88 slots
+2026-06-07 05:38:44,007 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:45,843 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:45,846 [DEBUG] app - Fetched 88 slots
+2026-06-07 05:38:48,653 [DEBUG] app - DB Connection: True
+2026-06-07 05:38:48,735 [DEBUG] app - DB Connection: True
+2026-06-07 05:39:15,985 [DEBUG] app - DB Connection: True
+2026-06-07 05:39:15,987 [DEBUG] app - Fetched 88 slots
+2026-06-07 05:40:28,294 [DEBUG] app - DB Connection: True
+2026-06-07 05:40:35,644 [DEBUG] app - DB Connection: True
+2026-06-07 05:41:15,514 [DEBUG] app - DB Connection: True
+2026-06-07 05:41:15,546 [DEBUG] app - DB Connection: True
+2026-06-07 05:41:48,287 [DEBUG] app - DB Connection: True
+2026-06-07 05:41:48,355 [DEBUG] app - DB Connection: True
+2026-06-07 05:42:10,586 [DEBUG] app - DB Connection: True
+2026-06-07 05:42:32,810 [DEBUG] app - DB Connection: True
+2026-06-07 05:42:32,970 [DEBUG] app - DB Connection: True
+2026-06-07 05:43:02,912 [DEBUG] app - DB Connection: True
+2026-06-07 05:43:07,212 [DEBUG] app - DB Connection: True
+2026-06-07 05:43:28,425 [DEBUG] app - DB Connection: True

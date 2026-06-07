@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Parking Receipt - Go Parky</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: white;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 600px;
+      background: linear-gradient(145deg, #1a1a1a, #333);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5), 0 0 10px rgba(0, 0, 0, 0.8);
+      animation: fadeIn 1s ease;
+      color: #f5f5dc;
+      text-align: center;
+      border: 1px solid #d4af37;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #d4af37;
+      margin-bottom: 10px;
+    }
+
+    .receipt p {
+      font-size: 16px;
+      margin: 12px 0;
+      line-height: 1.6;
+      border-bottom: 1px dashed #d4af37;
+      padding-bottom: 6px;
+      text-align: left;
+    }
+
+    .receipt span {
+      font-weight: 600;
+      color: #ffd700;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="logo.png" alt="Go Parky Logo" class="logo" />
+    <h2>Receipt</h2>
+    <div class="receipt" id="receiptBox">
+      <p><strong>Vehicle No:</strong> <span id="rVehicleNo"></span></p>
+      <p><strong>Owner Name:</strong> <span id="rOwnerName"></span></p>
+      <p><strong>Vehicle Type:</strong> <span id="rVehicleType"></span></p>
+      <p><strong>Entry Time:</strong> <span id="rEntryTime"></span></p>
+      <p><strong>Exit Time:</strong> <span id="rExitTime"></span></p>
+      <p><strong>Total Hours:</strong> <span id="rDuration"></span></p>
+      <p><strong>Total Fee:</strong> ₹<span id="rAmount"></span></p>
+    </div>
+  </div>
+<script>
+  window.onload = function () {
+    const params = new URLSearchParams(window.location.search);
+
+    const vehicleNo = params.get("vehicleNo");
+    const ownerName = params.get("ownerName");
+    const vehicleType = params.get("vehicleType");
+    const entryTime = new Date(params.get("entryTime"));
+    const exitTime = new Date(params.get("exitTime"));
+
+    const hours = Math.ceil(Math.abs(exitTime - entryTime) / 36e5);
+
+    let rate = 0;
+    if (vehicleType && vehicleType.toLowerCase() === "bike") rate = 10;
+    else if (vehicleType && vehicleType.toLowerCase() === "car") rate = 20;
+    else if (vehicleType && vehicleType.toLowerCase() === "truck") rate = 30;
+
+    const totalFee = rate * hours;
+
+    document.getElementById("rVehicleNo").textContent = vehicleNo;
+    document.getElementById("rOwnerName").textContent = ownerName;
+    document.getElementById("rVehicleType").textContent = vehicleType;
+    document.getElementById("rEntryTime").textContent = entryTime.toLocaleString();
+    document.getElementById("rExitTime").textContent = exitTime.toLocaleString();
+    document.getElementById("rDuration").textContent = `${hours} hours`;
+    document.getElementById("rAmount").textContent = totalFee.toFixed(2);
+  };
+</script>
+
+</body>
+</html>

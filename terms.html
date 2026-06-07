@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Go Parky - Terms and Conditions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #d4af37, #f0d56b);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    .card {
+      background-color: #fffbe6;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      padding: 30px 40px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-left: 6px solid #D4AF37;
+      animation: fadeInCard 1s ease forwards;
+      position: relative;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 25px;
+      font-size: 2em;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 10px;
+      color: #333;
+    }
+
+    li {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.5s ease;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      line-height: 1.6;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    li::before {
+      content: '✔';
+      color: #d4af37;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    li.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .card::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .card::-webkit-scrollbar-thumb {
+      background-color: #d4af37;
+      border-radius: 6px;
+    }
+
+    .card::-webkit-scrollbar-track {
+      background-color: #f0f0f0;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Go Parky - Terms and Conditions</h1>
+    <ul id="terms-list">
+      <li>Users must register before accessing parking services.</li>
+      <li>Parking is provided based on availability at the time of booking.</li>
+      <li>Cancellation charges may apply according to the cancellation policy.</li>
+      <li>Vehicles should be parked only in designated parking areas.</li>
+      <li>Go Parky is not responsible for any damage or theft of vehicles.</li>
+      <li>Users must follow local parking and traffic regulations at all times.</li>
+      <li>Violations of rules may result in suspension of parking privileges.</li>
+      <li>Terms and conditions may be updated at Go Parky's discretion.</li>
+      <li>All payments must be completed through approved payment channels.</li>
+      <li>Any disputes will be resolved under applicable local jurisdiction.</li>
+    </ul>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('#terms-list li');
+    items.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('visible');
+      }, 300 * (index + 1));
+    });
+  </script>
+</body>
+</html>

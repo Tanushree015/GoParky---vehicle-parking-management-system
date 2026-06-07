@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Dashboard - Profile</title>
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --bg: #fff;
+      --text: #000;
+      --panel-bg: #000;
+      --panel-text: #D4AF37;
+      --sidebar-bg: #D4AF37;
+      --sidebar-text: #000;
+      --taskbar-bg: #000;
+      --taskbar-text: #D4AF37;
+      --table-bg: #000;
+      --table-text: #D4AF37;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      --input-bg: #f5f5f5;
+      --input-text: #333;
+    }
+    body.dark {
+      --bg: #000;
+      --text: #fff;
+      --panel-bg: #fff;
+      --panel-text: #000;
+      --sidebar-bg: #222;
+      --sidebar-text: #fff;
+      --taskbar-bg: #111;
+      --taskbar-text: #D4AF37;
+      --table-bg: #fff;
+      --table-text: #000;
+      --input-bg: #333;
+      --input-text: #fff;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    .taskbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--taskbar-bg);
+      color: var(--taskbar-text);
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    .logo img {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+    }
+    .title {
+      margin-left: auto;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .theme-btn {
+      background: var(--gold);
+      color: var(--text);
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 1.5rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .theme-btn:hover {
+      background: #c29b2e;
+      transform: scale(1.05);
+    }
+    .container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+    .sidebar {
+      width: 240px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.1);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    .sidebar h3 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--sidebar-text);
+      padding: 0.8rem 1rem;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.3s, color 0.3s;
+    }
+    .sidebar a:hover {
+      background: var(--text);
+      color: var(--gold);
+      transform: translateX(6px);
+    }
+    .main {
+      flex: 1;
+      padding: 2rem;
+    }
+    .profile-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--gold);
+      margin-right: 2rem;
+    }
+    .profile-title h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+    .profile-title p {
+      margin: 0.5rem 0 0;
+      color: var(--text);
+      opacity: 0.8;
+      text-transform: capitalize;
+    }
+    .profile-details {
+      background: var(--panel-bg);
+      color: var(--panel-text);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    .profile-section {
+      margin-bottom: 1.5rem;
+    }
+    .profile-section h3 {
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      font-size: 1rem;
+      transition: border-color 0.3s, background-color 0.4s, color 0.4s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--text);
+    }
+    .btn-primary:hover {
+      background: #c29b2e;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: #666;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding: 1rem;
+      }
+      .main {
+        padding: 1rem;
+      }
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .profile-pic {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" />
+    </div>
+    <div class="title">Staff Dashboard</div>
+    <button class="theme-btn" onclick="toggleTheme()">Switch Theme</button>
+  </div>
+
+  <!-- Sidebar + Main Content -->
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Staff Menu</h3>
+      <a href="staff.html">🏠 Dashboard</a>
+      <a href="generate.html">🧾 Generate Bill</a>
+      <a href="slot.html">🅿️ Slot Availability</a>
+      <a href="shift.html">📋 Shift Logs</a>
+      <a href="staff_profile.html">👤 My Profile</a>
+      <a href="login.html">🚪 Logout</a>
+    </aside>
+
+    <main class="main">
+      <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <img src="prf.jpg" alt="Profile Picture" class="profile-pic" id="profile-pic">
+          <div class="profile-title">
+            <h2 id="userName">Loading...</h2>
+            <p id="userRole">Loading...</p>
+          </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+          <!-- Personal Information -->
+          <div class="profile-section">
+            <h3>Personal Information</h3>
+            <div class="form-group">
+              <label for="employeeId">Employee ID</label>
+              <input type="text" id="employeeId" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <input type="text" id="gender" class="form-control" readonly>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="profile-section">
+            <h3>Contact Information</h3>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("/api/profile")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const user = data.data;
+          document.getElementById('userName').textContent = user.name || "";
+          document.getElementById('userRole').textContent = user.role || "";
+          document.getElementById('fullName').value = user.name || "";
+          document.getElementById('email').value = user.email || "";
+          document.getElementById('phone').value = user.contact || "";
+          document.getElementById('gender').value = user.gender || "";
+          document.getElementById('employeeId').value = user.id || "";
+        } else {
+          alert("Failed to load profile: " + data.error);
+        }
+      })
+      .catch(err => {
+        alert("Error loading profile: " + err);
+      });
+  });
+  // Redirect staff to login if not authenticated
+  fetch('/api/profile')
+    .then(res => {
+      if (res.status === 401) window.location.href = '/login';
+    });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    /* Base colors */
+    :root {
+      --gold: #D4AF37;
+      --text-dark: #000;
+      --text-light: #fff;
+      --bg-light: #fff;
+      --bg-dark: #000;
+      --panel-bg-light: #000;
+      --panel-text-light: #D4AF37;
+      --panel-bg-dark: #fff;
+      --panel-text-dark: #000;
+      --table-bg-light: #000;
+      --table-text-light: #D4AF37;
+      --table-bg-dark: #fff;
+      --table-text-dark: #000;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Taskbar stays fixed colors */
+    .taskbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--text-dark);
+      color: var(--gold);
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .logo img {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+    }
+
+    .title {
+      margin-left: auto;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .theme-btn {
+      background: var(--gold);
+      color: var(--text-dark);
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 1.5rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .theme-btn:hover {
+      background: #c29b2e;
+      transform: scale(1.05);
+    }
+
+    /* Layout */
+    .container {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    /* Sidebar fixed style */
+    .sidebar {
+      width: 240px;
+      background: var(--gold);
+      color: var(--text-dark);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      padding: 0.8rem 1rem;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s, transform 0.3s, color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: var(--text-dark);
+      color: var(--gold);
+      transform: translateX(6px);
+    }
+
+    /* Main content theme switching */
+    .main {
+      flex: 1;
+      padding: 2rem;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    .main.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    /* Top panels */
+    .top-panels {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .panel {
+      background: var(--panel-bg-light);
+      color: var(--panel-text-light);
+      flex: 1 1 280px;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform 0.3s, background-color 0.4s, color 0.4s;
+    }
+
+    .main.dark .panel {
+      background: var(--panel-bg-dark);
+      color: var(--panel-text-dark);
+    }
+
+    .panel:hover {
+      transform: translateY(-6px);
+    }
+
+    .panel h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .slot-count {
+      font-size: 3.2rem;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--table-bg-light);
+      color: var(--table-text-light);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    .main.dark table {
+      background: var(--table-bg-dark);
+      color: var(--table-text-dark);
+    }
+
+    table thead {
+      background: rgba(212,175,55,0.15);
+    }
+
+    table th, table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding: 1rem;
+      }
+      .main {
+        padding: 1rem;
+      }
+      .top-panels {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" />
+    </div>
+    <div class="title">Admin Dashboard</div>
+    <button class="theme-btn" onclick="toggleTheme()">Switch Theme</button>
+  </div>
+
+  <!-- Sidebar + Main Content -->
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Admin Menu</h3>
+      <a href="admin.html">📌 Dashboard</a>
+      <a href="staffmag.html">👥 Manage Staff</a>
+      <a href="mslot.html">🅿️ Manage Parking Slots</a>
+      <a href="report2.html">📊 View Reports</a>
+      <a href="2d.html">🧩 2D View</a>
+      <a href="profile.html">👤 My Profile</a>
+      <a href="login.html">🚪 Logout</a>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <!-- Top Panels -->
+      <div class="top-panels">
+        <div class="panel">
+          <h3>Today's Revenue</h3>
+          <div class="slot-count" id="revenue">0</div>
+        </div>
+        <div class="panel">
+          <h3>Total Vehicles</h3>
+          <div class="slot-count" id="vehicles">0</div>
+        </div>
+      </div>
+
+      <!-- Staff Login Table -->
+      <div style="width:100%; margin:2rem 0 0 0;">
+        <h3 style="margin-bottom:1rem; text-align:left;">Recent Staff Logins</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Staff ID</th>
+              <th>Name</th>
+              <th>Login Time</th>
+            </tr>
+          </thead>
+          <tbody id="staffLoginsBody">
+            <!-- Filled by JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Toggle theme for only the main content
+    function toggleTheme() {
+      document.getElementById('mainContent').classList.toggle('dark');
+    }
+
+    // Fetch stats
+    async function fetchAdminStats() {
+      try {
+        const res = await fetch('/admin/stats');
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('revenue').textContent = data.revenue.toFixed(2);
+          document.getElementById('vehicles').textContent = data.vehicles;
+
+          // Render staff logins
+          const tbody = document.getElementById('staffLoginsBody');
+          tbody.innerHTML = '';
+          if (data.staff_logins.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3">No staff logins today.</td></tr>';
+          } else {
+            data.staff_logins.forEach(staff => {
+              const dt = new Date(staff.login_time.replace(' ', 'T'));
+              const time = dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+              tbody.innerHTML += `
+                <tr>
+                  <td>${staff.id}</td>
+                  <td>${staff.name}</td>
+                  <td>${time}</td>
+                </tr>
+              `;
+            });
+          }
+        } else {
+          console.error('Error:', data.error);
+        }
+      } catch (err) {
+        console.error('Failed to load admin stats:', err);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchAdminStats);
+    
+fetch('/api/profile')
+  .then(res => {
+    if (res.status === 401) window.location.href = '/login';
+  });
+
+  </script>
+
+</body>
+</html>
